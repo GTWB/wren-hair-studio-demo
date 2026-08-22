@@ -1,0 +1,46 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ColourRail from "../../components/ColourRail.astro";
+import { galleryImages } from "../../data/site";
+---
+
+<Layout
+  title="Gallery"
+  description="Browse recent cuts, colour work and studio shots from Wren Hair Studio, an independent hair salon in Clapham, London."
+>
+  <section class="mx-auto max-w-6xl px-5 sm:px-8 pt-14 sm:pt-20 pb-10">
+    <p class="eyebrow text-accent text-base mb-4">From the studio floor</p>
+    <h1 class="font-display font-semibold text-4xl sm:text-5xl leading-[1.05] tracking-tight text-ink max-w-2xl">
+      Gallery
+    </h1>
+    <p class="mt-6 text-lg text-ink-soft max-w-xl leading-relaxed">
+      A mix of finished cuts, colour work and the studio itself &mdash; most
+      of it shot on quiet Tuesday mornings between appointments.
+    </p>
+    <ColourRail class="mt-10 max-w-xs" tabHeight="h-2" />
+  </section>
+
+  <section class="mx-auto max-w-6xl px-5 sm:px-8 pb-24">
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+      {
+        galleryImages.map((img) => (
+          <figure class="group relative overflow-hidden">
+            <img
+              src={img.src}
+              alt={img.alt}
+              loading="lazy"
+              width="900"
+              height="1100"
+              class="w-full h-52 sm:h-64 object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            <span
+              class="absolute bottom-0 left-0 h-1.5 w-full"
+              style={{ backgroundColor: img.swatch }}
+              aria-hidden="true"
+            />
+          </figure>
+        ))
+      }
+    </div>
+  </section>
+</Layout>

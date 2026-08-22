@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+/* Wren Hair Studio — type system */
+@import "@fontsource-variable/archivo";
+@import "@fontsource-variable/archivo/wght-italic.css";
+@import "@fontsource-variable/work-sans";
+@import "@fontsource-variable/work-sans/wght-italic.css";
+@import "@fontsource-variable/newsreader";
+@import "@fontsource-variable/newsreader/wght-italic.css";
+
+@theme {
+  /* Warm, desaturated salon palette — bone paper, ink charcoal, muted brass accent */
+  --color-canvas: #f4efe6;
+  --color-canvas-alt: #eae1d0;
+  --color-ink: #24211d;
+  --color-ink-soft: #5b564c;
+  --color-ink-faint: #8b8478;
+  --color-accent: #6b5a34;
+  --color-accent-soft: #cabb9c;
+  --color-line: #d9cdb5;
+  --color-paper: #fbf9f4;
+
+  /* Colour-rail swatch tones — the salon's own tint reference, reused as a signature device */
+  --color-swatch-bone: #f4efe6;
+  --color-swatch-caramel: #a9713c;
+  --color-swatch-copper: #a6532e;
+  --color-swatch-ash: #8b8a80;
+  --color-swatch-espresso: #3b2c22;
+  --color-swatch-brass: #6b5a34;
+
+  --font-display: "Archivo Variable", "Archivo", sans-serif;
+  --font-body: "Work Sans Variable", "Work Sans", sans-serif;
+  --font-accent: "Newsreader Variable", "Newsreader", serif;
+
+  --breakpoint-xs: 22rem;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Visible keyboard focus everywhere */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* The Colour Rail — recurring swatch-tab signature motif */
+.colour-rail {
+  display: flex;
+  align-items: stretch;
+}
+
+.colour-rail span {
+  display: block;
+  height: 100%;
+}
+
+.eyebrow {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 450;
+  letter-spacing: 0.02em;
+}
+
+.tracked {
+  letter-spacing: 0.14em;
+}
+
+.hairline {
+  border-color: var(--color-line);
+}

@@ -1,0 +1,83 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ColourRail from "../../components/ColourRail.astro";
+import { serviceCategories } from "../../data/site";
+---
+
+<Layout
+  title="Services & Prices"
+  description="Cut, colour and treatment prices at Wren Hair Studio in Clapham — precision cutting from £45, balayage from £145, and treatments from £28."
+>
+  <section class="mx-auto max-w-6xl px-5 sm:px-8 pt-14 sm:pt-20 pb-10">
+    <p class="eyebrow text-accent text-base mb-4">Services &amp; prices</p>
+    <h1 class="font-display font-semibold text-4xl sm:text-5xl leading-[1.05] tracking-tight text-ink max-w-2xl">
+      Priced honestly, quoted properly.
+    </h1>
+    <p class="mt-6 text-lg text-ink-soft max-w-xl leading-relaxed">
+      Prices below are our standard rates. Colour work marked &ldquo;from&rdquo;
+      depends on hair length and density &mdash; we'll always confirm the
+      final price at consultation before anything happens.
+    </p>
+    <ColourRail class="mt-10 max-w-xs" tabHeight="h-2" />
+  </section>
+
+  {
+    serviceCategories.map((cat, i) => (
+      <section
+        id={cat.key}
+        class={`${i % 2 === 1 ? "bg-canvas-alt border-y border-line" : ""} py-16 scroll-mt-24`}
+      >
+        <div class="mx-auto max-w-6xl px-5 sm:px-8">
+          <div class="flex items-center gap-4 mb-8">
+            <span
+              class="h-8 w-2"
+              style={{ backgroundColor: cat.swatch }}
+              aria-hidden="true"
+            />
+            <div>
+              <h2 class="font-display text-2xl sm:text-3xl uppercase tracked text-ink">
+                {cat.label}
+              </h2>
+              <p class="text-sm text-ink-soft mt-1 max-w-xl">{cat.intro}</p>
+            </div>
+          </div>
+
+          <ul class="divide-y divide-line border-t border-b border-line">
+            {cat.services.map((s) => (
+              <li class="flex items-baseline justify-between gap-6 py-5">
+                <div>
+                  <p class="font-display text-base uppercase tracked text-ink">
+                    {s.name}
+                  </p>
+                  <p class="text-sm text-ink-soft mt-1 max-w-lg">{s.desc}</p>
+                </div>
+                <p class="font-display text-lg text-accent whitespace-nowrap">
+                  {s.price}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    ))
+  }
+
+  <section class="mx-auto max-w-6xl px-5 sm:px-8 py-20">
+    <div class="bg-ink text-canvas px-8 py-14 sm:px-14 flex flex-col sm:flex-row sm:items-center gap-8 sm:justify-between">
+      <div>
+        <h2 class="font-display font-semibold text-2xl sm:text-3xl">
+          Not sure which service you need?
+        </h2>
+        <p class="mt-2 text-accent-soft">
+          Book a free 20-minute consultation and we'll plan it out together.
+        </p>
+      </div>
+      <a
+        href="/booking/"
+        class="inline-flex items-center justify-center bg-canvas text-ink font-display uppercase tracked text-sm px-7 py-4 hover:bg-accent hover:text-canvas transition-colors whitespace-nowrap"
+      >
+        Book a chair
+      </a>
+    </div>
+  </section>
+</Layout>

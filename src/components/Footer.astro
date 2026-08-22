@@ -1,0 +1,57 @@
+---
+import { salon, nav } from "../data/site";
+import ColourRail from "./ColourRail.astro";
+---
+
+<footer class="bg-ink text-canvas mt-24">
+  <ColourRail tabHeight="h-1.5" />
+  <div class="mx-auto max-w-6xl px-5 sm:px-8 py-14 grid gap-10 sm:grid-cols-3">
+    <div>
+      <p class="font-display text-lg uppercase tracked">{salon.short}</p>
+      <p class="eyebrow text-canvas/70 mt-1">Hair Studio, {salon.area}</p>
+      <p class="text-sm text-canvas/70 mt-4 leading-relaxed">
+        {salon.addressLine1}<br />
+        {salon.addressLine2}
+      </p>
+    </div>
+
+    <div>
+      <p class="font-display text-xs uppercase tracked text-canvas/60 mb-3">
+        Get in touch
+      </p>
+      <ul class="text-sm space-y-2 text-canvas/85">
+        <li><a class="hover:text-accent-soft" href={salon.phoneHref}>{salon.phone}</a></li>
+        <li><a class="hover:text-accent-soft" href={`mailto:${salon.email}`}>{salon.email}</a></li>
+        <li class="flex gap-4 pt-2">
+          <a class="hover:text-accent-soft" href={salon.instagram} target="_blank" rel="noopener noreferrer">Instagram</a>
+          <a class="hover:text-accent-soft" href={salon.facebook} target="_blank" rel="noopener noreferrer">Facebook</a>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <p class="font-display text-xs uppercase tracked text-canvas/60 mb-3">
+        Studio hours
+      </p>
+      <ul class="text-sm space-y-1.5 text-canvas/85">
+        {
+          salon.hours.map((h) => (
+            <li class="flex justify-between gap-4">
+              <span>{h.day}</span>
+              <span class="text-canvas/60">{h.time}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-canvas/15">
+    <div class="mx-auto max-w-6xl px-5 sm:px-8 py-5 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between text-xs text-canvas/60">
+      <p>&copy; {new Date().getFullYear()} {salon.name}. All rights reserved.</p>
+      <div class="flex gap-5">
+        <a class="hover:text-accent-soft" href="/privacy/">Privacy Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>

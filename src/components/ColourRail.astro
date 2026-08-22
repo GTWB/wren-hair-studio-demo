@@ -1,0 +1,21 @@
+---
+// The Colour Rail — the site's signature device, styled after the physical
+// swatch strips used at the salon to choose a tint. Reused across the site
+// as a divider / index rather than decoration for its own sake.
+import { swatchRail } from "../data/site";
+
+interface Props {
+  class?: string;
+  tabHeight?: string;
+}
+
+const { class: className = "", tabHeight = "h-2.5" } = Astro.props;
+---
+
+<div class={`colour-rail w-full ${className}`} role="presentation" aria-hidden="true">
+  {
+    swatchRail.map((s) => (
+      <span class={`flex-1 ${tabHeight}`} style={{ backgroundColor: s.hex }} />
+    ))
+  }
+</div>

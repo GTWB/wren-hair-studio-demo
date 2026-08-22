@@ -1,0 +1,22 @@
+---
+interface Props {
+  id?: string;
+  name?: string;
+}
+const { id = "consent", name = "consent" } = Astro.props;
+---
+
+<label for={id} class="flex items-start gap-3 text-sm text-ink-soft">
+  <input
+    type="checkbox"
+    id={id}
+    name={name}
+    required
+    class="mt-1 h-4 w-4 shrink-0 accent-accent border-line"
+  />
+  <span>
+    I consent to Wren Hair Studio storing and using my details to respond to
+    this request, in line with the <a href="/privacy/" class="underline hover:text-accent">Privacy Policy</a>.
+    <span class="text-ink-faint">*</span>
+  </span>
+</label>
