@@ -57,6 +57,22 @@ body {
   }
 }
 
+/* Scroll-triggered fade-in — progressive enhancement.
+   Elements only start hidden once JS has confirmed it can run the
+   IntersectionObserver AND the visitor hasn't asked for reduced motion
+   (see the .reveal-js class toggled in Layout.astro). Without JS, or with
+   prefers-reduced-motion, content is simply visible with no animation. */
+.reveal-js .reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal-js .reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* Visible keyboard focus everywhere */
 a:focus-visible,
 button:focus-visible,

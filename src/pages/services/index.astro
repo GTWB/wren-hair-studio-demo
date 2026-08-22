@@ -25,7 +25,7 @@ import { serviceCategories } from "../../data/site";
     serviceCategories.map((cat, i) => (
       <section
         id={cat.key}
-        class={`${i % 2 === 1 ? "bg-canvas-alt border-y border-line" : ""} py-16 scroll-mt-24`}
+        class={`reveal ${i % 2 === 1 ? "bg-canvas-alt border-y border-line" : ""} py-16 scroll-mt-24`}
       >
         <div class="mx-auto max-w-6xl px-5 sm:px-8">
           <div class="flex items-center gap-4 mb-8">
@@ -62,7 +62,7 @@ import { serviceCategories } from "../../data/site";
     ))
   }
 
-  <section class="mx-auto max-w-6xl px-5 sm:px-8 py-20">
+  <section class="reveal mx-auto max-w-6xl px-5 sm:px-8 py-20">
     <div class="bg-ink text-canvas px-8 py-14 sm:px-14 flex flex-col sm:flex-row sm:items-center gap-8 sm:justify-between">
       <div>
         <h2 class="font-display font-semibold text-2xl sm:text-3xl">
