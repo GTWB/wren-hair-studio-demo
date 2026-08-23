@@ -10,8 +10,8 @@ const { eyebrow, title, align = "left", class: className = "" } = Astro.props;
 ---
 
 <div class={`${align === "center" ? "text-center mx-auto" : ""} ${className}`}>
-  {eyebrow && <p class="eyebrow text-accent text-base mb-2">{eyebrow}</p>}
-  <h2 class="font-display font-semibold text-3xl sm:text-4xl text-ink tracking-tight">
+  {eyebrow && <p class="eyebrow text-accent text-xs sm:text-sm mb-3">{eyebrow}</p>}
+  <h2 class="font-display font-black text-3xl sm:text-4xl md:text-5xl text-ink tracking-tight leading-[1.05]">
     {title}
   </h2>
 </div>

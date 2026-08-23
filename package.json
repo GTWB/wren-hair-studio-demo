@@ -1,5 +1,5 @@
 {
-  "name": "density-disk",
+  "name": "demo-parrucchiere",
   "type": "module",
   "version": "0.0.1",
   "engines": {
@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "@fontsource-variable/archivo": "^5.3.0",
-    "@fontsource-variable/newsreader": "^5.3.0",
     "@fontsource-variable/work-sans": "^5.3.0",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.2.4",

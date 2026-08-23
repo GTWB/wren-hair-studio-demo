@@ -1,14 +1,12 @@
 ---
 import { salon, nav } from "../data/site";
-import ColourRail from "./ColourRail.astro";
 ---
 
 <footer class="bg-ink text-canvas mt-24">
-  <ColourRail tabHeight="h-1.5" />
   <div class="mx-auto max-w-6xl px-5 sm:px-8 py-14 grid gap-10 sm:grid-cols-3">
     <div>
-      <p class="font-display text-lg uppercase tracked">{salon.short}</p>
-      <p class="eyebrow text-canvas/70 mt-1">Hair Studio, {salon.area}</p>
+      <p class="font-display font-black text-lg uppercase tracked">{salon.short}</p>
+      <p class="eyebrow text-accent-soft mt-2">Hair Studio, {salon.area}</p>
       <p class="text-sm text-canvas/70 mt-4 leading-relaxed">
         {salon.addressLine1}<br />
         {salon.addressLine2}
@@ -16,7 +14,7 @@ import ColourRail from "./ColourRail.astro";
     </div>
 
     <div>
-      <p class="font-display text-xs uppercase tracked text-canvas/60 mb-3">
+      <p class="eyebrow text-xs text-canvas/60 mb-3">
         Get in touch
       </p>
       <ul class="text-sm space-y-2 text-canvas/85">
@@ -30,7 +28,7 @@ import ColourRail from "./ColourRail.astro";
     </div>
 
     <div>
-      <p class="font-display text-xs uppercase tracked text-canvas/60 mb-3">
+      <p class="eyebrow text-xs text-canvas/60 mb-3">
         Studio hours
       </p>
       <ul class="text-sm space-y-1.5 text-canvas/85">
@@ -47,11 +45,17 @@ import ColourRail from "./ColourRail.astro";
   </div>
 
   <div class="border-t border-canvas/15">
-    <div class="mx-auto max-w-6xl px-5 sm:px-8 py-5 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between text-xs text-canvas/60">
-      <p>&copy; {new Date().getFullYear()} {salon.name}. All rights reserved.</p>
-      <div class="flex gap-5">
+    <div class="mx-auto max-w-6xl px-5 sm:px-8 py-5 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between text-xs text-canvas/60">
+      <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-5">
+        <p>&copy; {new Date().getFullYear()} {salon.name}. All rights reserved.</p>
         <a class="hover:text-accent-soft" href="/privacy/">Privacy Policy</a>
       </div>
+      <a
+        href="/booking/"
+        class="inline-flex items-center gap-2 bg-accent text-ink font-display font-bold text-xs uppercase tracked px-5 py-2.5 rounded-full hover:bg-canvas transition-colors self-start sm:self-auto"
+      >
+        Book a chair
+      </a>
     </div>
   </div>
 </footer>

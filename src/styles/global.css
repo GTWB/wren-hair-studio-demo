@@ -5,32 +5,28 @@
 @import "@fontsource-variable/archivo/wght-italic.css";
 @import "@fontsource-variable/work-sans";
 @import "@fontsource-variable/work-sans/wght-italic.css";
-@import "@fontsource-variable/newsreader";
-@import "@fontsource-variable/newsreader/wght-italic.css";
 
 @theme {
-  /* Warm, desaturated salon palette — bone paper, ink charcoal, muted brass accent */
-  --color-canvas: #f4efe6;
-  --color-canvas-alt: #eae1d0;
-  --color-ink: #24211d;
-  --color-ink-soft: #5b564c;
-  --color-ink-faint: #8b8478;
-  --color-accent: #6b5a34;
-  --color-accent-soft: #cabb9c;
-  --color-line: #d9cdb5;
-  --color-paper: #fbf9f4;
+  /* Warm, saturated salon palette — espresso chocolate, warm cream, bright amber accent */
+  --color-canvas: #f5e7d0;
+  --color-canvas-alt: #ecd6ac;
+  --color-ink: #2a170d;
+  --color-ink-soft: #6b4630;
+  --color-ink-faint: #9c7f61;
+  --color-accent: #ec6a12;
+  --color-accent-soft: #f5a94e;
+  --color-line: #e0c69c;
+  --color-paper: #fbf3e4;
 
-  /* Colour-rail swatch tones — the salon's own tint reference, reused as a signature device */
-  --color-swatch-bone: #f4efe6;
-  --color-swatch-caramel: #a9713c;
-  --color-swatch-copper: #a6532e;
-  --color-swatch-ash: #8b8a80;
-  --color-swatch-espresso: #3b2c22;
-  --color-swatch-brass: #6b5a34;
+  --color-swatch-bone: #f5e7d0;
+  --color-swatch-caramel: #c9902f;
+  --color-swatch-copper: #ec6a12;
+  --color-swatch-ash: #8a6a4c;
+  --color-swatch-espresso: #2a170d;
+  --color-swatch-brass: #b23a12;
 
   --font-display: "Archivo Variable", "Archivo", sans-serif;
   --font-body: "Work Sans Variable", "Work Sans", sans-serif;
-  --font-accent: "Newsreader Variable", "Newsreader", serif;
 
   --breakpoint-xs: 22rem;
 }
@@ -85,22 +81,12 @@ select:focus-visible,
   border-radius: 2px;
 }
 
-/* The Colour Rail — recurring swatch-tab signature motif */
-.colour-rail {
-  display: flex;
-  align-items: stretch;
-}
-
-.colour-rail span {
-  display: block;
-  height: 100%;
-}
-
 .eyebrow {
-  font-family: var(--font-accent);
-  font-style: italic;
-  font-weight: 450;
-  letter-spacing: 0.02em;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-style: normal;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
 
 .tracked {
@@ -109,4 +95,48 @@ select:focus-visible,
 
 .hairline {
   border-color: var(--color-line);
+}
+
+/* Overlay header (homepage hero) — floats transparent over the photo, then
+   solidifies once the visitor scrolls or opens the mobile menu (class
+   toggled in Header.astro). Specificity of the two-class selectors below is
+   intentionally higher than the single-class Tailwind utilities (text-ink
+   etc.) applied inline, so no !important is needed. */
+.header-overlay {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.header-overlay .brand,
+.header-overlay .primary-nav a {
+  color: var(--color-canvas);
+}
+
+.header-overlay .primary-nav a[aria-current="page"] {
+  border-color: var(--color-canvas);
+}
+
+.header-overlay .menu-toggle {
+  color: var(--color-canvas);
+  border-color: var(--color-canvas);
+}
+
+.header-overlay.is-solid {
+  background-color: color-mix(in srgb, var(--color-canvas) 95%, transparent);
+  backdrop-filter: blur(10px);
+  border-color: var(--color-line);
+}
+
+.header-overlay.is-solid .brand,
+.header-overlay.is-solid .primary-nav a {
+  color: var(--color-ink);
+}
+
+.header-overlay.is-solid .primary-nav a[aria-current="page"] {
+  border-color: var(--color-accent);
+}
+
+.header-overlay.is-solid .menu-toggle {
+  color: var(--color-ink);
+  border-color: var(--color-ink);
 }

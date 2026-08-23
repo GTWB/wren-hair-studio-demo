@@ -1,34 +1,17 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import ColourRail from "../../components/ColourRail.astro";
-import ConsentCheckbox from "../../components/ConsentCheckbox.astro";
-import { serviceCategories, team } from "../../data/site";
-
-const allServices = serviceCategories.flatMap((cat) =>
-  cat.services.map((s) => ({ ...s, category: cat.label, swatch: cat.swatch }))
-);
-
-const dates = [
-  { label: "Tue 25", full: "Tuesday 25 August" },
-  { label: "Wed 26", full: "Wednesday 26 August" },
-  { label: "Thu 27", full: "Thursday 27 August" },
-  { label: "Fri 28", full: "Friday 28 August" },
-  { label: "Sat 29", full: "Saturday 29 August" },
-];
-
-const times = ["9:30", "10:15", "11:00", "13:30", "14:15", "16:00", "17:30"];
 
 /**
- * DEMO NOTE — this whole booking flow is a static, front-end-only mockup.
- * It is not wired to a real booking backend and creates no real appointment.
+ * DEMO NOTE — this is a real Calendly inline embed, connected to a free-tier
+ * test account with a single event type, used only to preview how a live
+ * booking widget looks and behaves on the site. It is not the final setup
+ * for a real client.
  *
- * When this site goes live for an actual client (Premium package), replace
- * the markup inside <div id="booking-mock"> below with either:
- *   1. A Calendly inline embed, e.g.:
- *      <div class="calendly-inline-widget" data-url="https://calendly.com/<client-account>/consultation" style="min-width:320px;height:700px;"></div>
- *      <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
- *   2. Or a Calendly popup button linking out, if an inline embed doesn't fit the layout.
- * The client's own Calendly account must exist first — never create one on their behalf.
+ * When this site goes live for an actual client (Premium package), swap the
+ * data-url below for the client's own Calendly link (their account must
+ * already exist — never create one on their behalf). If an inline embed
+ * doesn't fit the layout, a Calendly popup button linking out is the
+ * alternative.
  */
 ---
 
@@ -37,196 +20,50 @@ const times = ["9:30", "10:15", "11:00", "13:30", "14:15", "16:00", "17:30"];
   description="Request an appointment at Wren Hair Studio in Clapham — choose a service, stylist and time, then confirm your details."
 >
   <section class="mx-auto max-w-6xl px-5 sm:px-8 pt-14 sm:pt-20 pb-10">
-    <p class="eyebrow text-accent text-base mb-4">Request an appointment</p>
-    <h1 class="font-display font-semibold text-4xl sm:text-5xl leading-[1.05] tracking-tight text-ink max-w-2xl">
-      Book a chair
+    <p class="eyebrow text-accent text-xs sm:text-sm mb-4">Request an appointment</p>
+    <h1 class="font-display font-black uppercase text-4xl sm:text-5xl leading-[1.05] tracking-tight text-ink max-w-2xl">
+      Book a <span class="text-accent">chair</span>
     </h1>
     <p class="mt-6 text-lg text-ink-soft max-w-xl leading-relaxed">
-      Pick a service, a stylist and a time that works, then send your
-      request. We'll confirm by email or phone within one working day.
+      Pick a service, a stylist and a time that works — your appointment is
+      confirmed instantly, with a reminder sent straight to your inbox.
     </p>
-    <ColourRail class="mt-10 max-w-xs" tabHeight="h-2" />
   </section>
 
   <section class="reveal mx-auto max-w-6xl px-5 sm:px-8 pb-24">
-    <div id="booking-mock" class="grid gap-10 lg:grid-cols-12">
-      <form
-        id="booking-form"
-        class="lg:col-span-8 border border-line bg-paper p-6 sm:p-10 space-y-10"
-      >
-        <!-- Step 1: service -->
-        <div>
-          <h2 class="font-display text-sm uppercase tracked text-ink-faint mb-4">
-            1. Choose a service
-          </h2>
-          <div class="grid sm:grid-cols-2 gap-3" role="radiogroup" aria-label="Choose a service">
-            {
-              allServices.map((s, i) => (
-                <label class="service-option flex items-start gap-3 border border-line p-4 cursor-pointer has-[:checked]:border-ink has-[:checked]:bg-canvas-alt transition-colors">
-                  <input
-                    type="radio"
-                    name="service"
-                    value={s.name}
-                    required
-                    class="mt-1 accent-accent"
-                    checked={i === 0}
-                  />
-                  <span>
-                    <span class="block font-display text-sm uppercase tracked text-ink">
-                      {s.name}
-                    </span>
-                    <span class="block text-xs text-ink-faint mt-0.5">
-                      {s.category} &middot; {s.price}
-                    </span>
-                  </span>
-                </label>
-              ))
-            }
-          </div>
-        </div>
-
-        <!-- Step 2: stylist -->
-        <div>
-          <h2 class="font-display text-sm uppercase tracked text-ink-faint mb-4">
-            2. Choose a stylist
-          </h2>
-          <div class="grid sm:grid-cols-3 gap-3" role="radiogroup" aria-label="Choose a stylist">
-            <label class="flex items-center gap-3 border border-line p-4 cursor-pointer has-[:checked]:border-ink has-[:checked]:bg-canvas-alt transition-colors">
-              <input type="radio" name="stylist" value="No preference" required class="accent-accent" checked />
-              <span class="font-display text-sm uppercase tracked text-ink">No preference</span>
-            </label>
-            {
-              team.map((member) => (
-                <label class="flex items-center gap-3 border border-line p-4 cursor-pointer has-[:checked]:border-ink has-[:checked]:bg-canvas-alt transition-colors">
-                  <input type="radio" name="stylist" value={member.name} class="accent-accent" />
-                  <span class="font-display text-sm uppercase tracked text-ink">
-                    {member.name.split(" ")[0]}
-                  </span>
-                </label>
-              ))
-            }
-          </div>
-        </div>
-
-        <!-- Step 3: date -->
-        <div>
-          <h2 class="font-display text-sm uppercase tracked text-ink-faint mb-4">
-            3. Choose a date
-          </h2>
-          <div class="flex flex-wrap gap-2" role="radiogroup" aria-label="Choose a date">
-            {
-              dates.map((d, i) => (
-                <label class="cursor-pointer">
-                  <input
-                    type="radio"
-                    name="date"
-                    value={d.full}
-                    class="sr-only peer"
-                    required
-                    checked={i === 0}
-                  />
-                  <span class="block font-display text-sm uppercase tracked px-4 py-2.5 border border-line text-ink-soft peer-checked:bg-ink peer-checked:text-canvas peer-checked:border-ink transition-colors">
-                    {d.label}
-                  </span>
-                </label>
-              ))
-            }
-          </div>
-        </div>
-
-        <!-- Step 4: time -->
-        <div>
-          <h2 class="font-display text-sm uppercase tracked text-ink-faint mb-4">
-            4. Choose a time
-          </h2>
-          <div class="flex flex-wrap gap-2" role="radiogroup" aria-label="Choose a time">
-            {
-              times.map((t, i) => (
-                <label class="cursor-pointer">
-                  <input
-                    type="radio"
-                    name="time"
-                    value={t}
-                    class="sr-only peer"
-                    required
-                    checked={i === 0}
-                  />
-                  <span class="block font-display text-sm px-4 py-2.5 border border-line text-ink-soft peer-checked:bg-ink peer-checked:text-canvas peer-checked:border-ink transition-colors">
-                    {t}
-                  </span>
-                </label>
-              ))
-            }
-          </div>
-        </div>
-
-        <!-- Step 5: details -->
-        <div>
-          <h2 class="font-display text-sm uppercase tracked text-ink-faint mb-4">
-            5. Your details
-          </h2>
-          <div class="grid sm:grid-cols-2 gap-4">
-            <div>
-              <label for="b-name" class="block text-sm text-ink-soft mb-1.5">Full name</label>
-              <input id="b-name" name="name" type="text" required autocomplete="name"
-                class="w-full border border-line bg-canvas px-4 py-2.5 text-ink focus:border-accent outline-none" />
-            </div>
-            <div>
-              <label for="b-phone" class="block text-sm text-ink-soft mb-1.5">Phone</label>
-              <input id="b-phone" name="phone" type="tel" required autocomplete="tel"
-                class="w-full border border-line bg-canvas px-4 py-2.5 text-ink focus:border-accent outline-none" />
-            </div>
-            <div class="sm:col-span-2">
-              <label for="b-email" class="block text-sm text-ink-soft mb-1.5">Email</label>
-              <input id="b-email" name="email" type="email" required autocomplete="email"
-                class="w-full border border-line bg-canvas px-4 py-2.5 text-ink focus:border-accent outline-none" />
-            </div>
-            <div class="sm:col-span-2">
-              <label for="b-notes" class="block text-sm text-ink-soft mb-1.5">Anything we should know? (optional)</label>
-              <textarea id="b-notes" name="notes" rows="3"
-                class="w-full border border-line bg-canvas px-4 py-2.5 text-ink focus:border-accent outline-none"></textarea>
-            </div>
-          </div>
-        </div>
-
-        <ConsentCheckbox id="booking-consent" name="consent" />
-
-        <button
-          type="submit"
-          class="w-full sm:w-auto inline-flex items-center justify-center bg-ink text-canvas font-display uppercase tracked text-sm px-8 py-4 hover:bg-accent transition-colors"
+    <div id="booking-widget" class="grid gap-10 lg:grid-cols-12">
+      <div class="lg:col-span-8 rounded-2xl border border-line bg-paper shadow-md p-2 sm:p-4">
+        <!--
+          Real Calendly inline embed, for a test with the user's own free-tier
+          account (single event type). Swap data-url for the client's own
+          Calendly link when this is reused for a real customer.
+        -->
+        <div
+          class="calendly-inline-widget"
+          data-url="https://calendly.com/giuseppes90"
+          style="min-width:320px;height:700px;"
         >
-          Send appointment request
-        </button>
-
-        <p
-          id="booking-confirmation"
-          role="status"
-          class="hidden border border-accent bg-canvas-alt text-ink px-5 py-4 text-sm"
-        >
-          Thanks &mdash; your request has been noted. This is a demo form, so
-          nothing was actually sent; on your live site this becomes a real
-          request straight to the studio.
-        </p>
-      </form>
+        </div>
+      </div>
 
       <aside class="lg:col-span-4">
-        <div class="border border-line bg-canvas-alt p-6 sticky top-28">
-          <p class="font-display text-sm uppercase tracked text-ink-faint mb-4">
+        <div class="rounded-2xl bg-canvas-alt shadow-md p-6 sticky top-28">
+          <p class="eyebrow text-accent text-xs mb-4">
             Good to know
           </p>
           <ul class="space-y-4 text-sm text-ink-soft leading-relaxed">
             <li>
-              <span class="block font-display text-ink text-xs uppercase tracked mb-1">Confirmation</span>
-              Every request is confirmed by a real person &mdash; nothing is
-              auto-booked.
+              <span class="block font-display font-black text-ink text-xs uppercase tracked mb-1">Confirmation</span>
+              Your slot is booked instantly &mdash; you'll get an email
+              confirmation and an automatic reminder ahead of time.
             </li>
             <li>
-              <span class="block font-display text-ink text-xs uppercase tracked mb-1">Cancellations</span>
-              Please give us 24 hours' notice if you need to move your
-              appointment.
+              <span class="block font-display font-black text-ink text-xs uppercase tracked mb-1">Cancellations</span>
+              Need to change plans? Use the reschedule or cancel link in your
+              confirmation email &mdash; no need to call.
             </li>
             <li>
-              <span class="block font-display text-ink text-xs uppercase tracked mb-1">First visit?</span>
+              <span class="block font-display font-black text-ink text-xs uppercase tracked mb-1">First visit?</span>
               Add a note above and we'll allow extra time for a consultation.
             </li>
           </ul>
@@ -236,15 +73,4 @@ const times = ["9:30", "10:15", "11:00", "13:30", "14:15", "16:00", "17:30"];
   </section>
 </Layout>
 
-<script>
-  const form = document.getElementById("booking-form") as HTMLFormElement | null;
-  const confirmation = document.getElementById("booking-confirmation");
-
-  form?.addEventListener("submit", (e) => {
-    e.preventDefault();
-    // Demo-only: no backend call. On the live client site this handler is
-    // replaced entirely by the Calendly embed noted in the template above.
-    confirmation?.classList.remove("hidden");
-    confirmation?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-  });
-</script>
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>

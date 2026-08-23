@@ -6,9 +6,10 @@ import Footer from "../components/Footer.astro";
 interface Props {
   title: string;
   description: string;
+  headerVariant?: "solid" | "overlay";
 }
 
-const { title, description } = Astro.props;
+const { title, description, headerVariant = "solid" } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
@@ -39,7 +40,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     >
       Skip to content
     </a>
-    <Header />
+    <Header variant={headerVariant} />
     <main id="main">
       <slot />
     </main>

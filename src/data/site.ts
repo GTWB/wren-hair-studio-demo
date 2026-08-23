@@ -20,17 +20,6 @@ export const salon = {
   ],
 };
 
-// The "colour rail" — swatch tones used as a recurring signature motif
-// (nav underline, section dividers, service category markers, footer).
-export const swatchRail = [
-  { name: "Bone", hex: "#f4efe6" },
-  { name: "Caramel", hex: "#a9713c" },
-  { name: "Copper", hex: "#a6532e" },
-  { name: "Ash", hex: "#8b8a80" },
-  { name: "Espresso", hex: "#3b2c22" },
-  { name: "Brass", hex: "#6b5a34" },
-];
-
 export const nav = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about/" },

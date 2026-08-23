@@ -1,7 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import SectionHeading from "../../components/SectionHeading.astro";
-import ColourRail from "../../components/ColourRail.astro";
 import { team } from "../../data/site";
 ---
 
@@ -9,30 +8,25 @@ import { team } from "../../data/site";
   title="About Us"
   description="Meet the team at Wren Hair Studio in Clapham and read the story behind our independent salon on Abbeville Road."
 >
-  <section class="mx-auto max-w-6xl px-5 sm:px-8 pt-14 sm:pt-20 pb-14 grid gap-10 lg:grid-cols-12 lg:items-end">
-    <div class="lg:col-span-7">
-      <p class="eyebrow text-accent text-base mb-4">Our story</p>
-      <h1 class="font-display font-semibold text-4xl sm:text-5xl leading-[1.05] tracking-tight text-ink">
-        A small studio, run properly.
-      </h1>
-      <p class="mt-6 text-lg text-ink-soft leading-relaxed max-w-xl">
-        Wren opened in 2017 in a narrow shopfront on Abbeville Road, with two
-        chairs and a basin borrowed from a salon two doors down that had just
-        closed. Marcus Adeyemi, our founder, wanted a studio where every
-        appointment had proper time attached to it &mdash; no ten-minute
-        consultations squeezed between three other clients.
-      </p>
-    </div>
-    <div class="lg:col-span-5">
-      <ColourRail tabHeight="h-2" />
-    </div>
+  <section class="mx-auto max-w-6xl px-5 sm:px-8 pt-14 sm:pt-20 pb-14">
+    <p class="eyebrow text-accent text-xs sm:text-sm mb-4">Our story</p>
+    <h1 class="font-display font-black uppercase text-4xl sm:text-5xl leading-[1.05] tracking-tight text-ink">
+      A small studio, run <span class="text-accent">properly</span>.
+    </h1>
+    <p class="mt-6 text-lg text-ink-soft leading-relaxed max-w-xl">
+      Wren opened in 2017 in a narrow shopfront on Abbeville Road, with two
+      chairs and a basin borrowed from a salon two doors down that had just
+      closed. Marcus Adeyemi, our founder, wanted a studio where every
+      appointment had proper time attached to it &mdash; no ten-minute
+      consultations squeezed between three other clients.
+    </p>
   </section>
 
   <section class="reveal mx-auto max-w-6xl px-5 sm:px-8 pb-16 grid gap-10 lg:grid-cols-2 lg:items-center">
     <img
       src="https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=1100&h=900&q=80"
       alt="Stylist blow-drying a client's hair at Wren Hair Studio"
-      class="w-full h-80 sm:h-[420px] object-cover"
+      class="w-full h-80 sm:h-[420px] object-cover rounded-2xl shadow-md"
       loading="lazy"
       width="1100"
       height="900"
@@ -54,27 +48,30 @@ import { team } from "../../data/site";
     </div>
   </section>
 
-  <section class="reveal bg-canvas-alt border-y border-line py-20">
+  <section class="reveal bg-ink text-canvas py-20">
     <div class="mx-auto max-w-6xl px-5 sm:px-8">
-      <SectionHeading eyebrow="Meet the team" title="Who's behind the chair" />
+      <p class="eyebrow text-accent-soft text-xs sm:text-sm mb-3">Meet the team</p>
+      <h2 class="font-display font-black text-3xl sm:text-4xl md:text-5xl uppercase text-canvas tracking-tight leading-[1.05]">
+        Who's behind the chair
+      </h2>
       <div class="mt-10 grid gap-8 sm:grid-cols-3">
         {
           team.map((member) => (
-            <div class="bg-canvas border border-line">
+            <div>
               <img
                 src={member.image}
                 alt={member.alt}
                 loading="lazy"
                 width="600"
                 height="750"
-                class="w-full h-72 object-cover"
+                class="w-full h-72 object-cover rounded-2xl"
               />
-              <div class="p-6">
-                <h3 class="font-display text-lg uppercase tracked text-ink">
+              <div class="pt-5">
+                <h3 class="font-display font-black text-lg uppercase tracked text-canvas">
                   {member.name}
                 </h3>
-                <p class="eyebrow text-accent text-sm mt-1">{member.role}</p>
-                <p class="mt-3 text-sm text-ink-soft leading-relaxed">
+                <p class="eyebrow text-accent-soft text-xs mt-1">{member.role}</p>
+                <p class="mt-3 text-sm text-canvas/70 leading-relaxed">
                   {member.bio}
                 </p>
               </div>
@@ -87,26 +84,26 @@ import { team } from "../../data/site";
 
   <section class="reveal mx-auto max-w-6xl px-5 sm:px-8 py-20">
     <SectionHeading eyebrow="How we work" title="Three things we won't compromise on" />
-    <div class="mt-10 grid gap-px bg-line sm:grid-cols-3 border border-line">
-      <div class="bg-canvas p-8">
-        <span class="h-1.5 w-10 mb-6 block bg-swatch-caramel" aria-hidden="true"></span>
-        <h3 class="font-display text-lg uppercase tracked text-ink">Real consultations</h3>
+    <div class="mt-10 grid gap-6 sm:grid-cols-3">
+      <div class="bg-canvas rounded-2xl border border-line shadow-md p-8">
+        <span class="h-1.5 w-10 mb-6 block rounded-full bg-swatch-caramel" aria-hidden="true"></span>
+        <h3 class="font-display font-black uppercase tracked text-ink">Real consultations</h3>
         <p class="mt-3 text-sm text-ink-soft leading-relaxed">
           Every first visit starts with a proper conversation about your
           hair's history, not just what you want it to look like tomorrow.
         </p>
       </div>
-      <div class="bg-canvas p-8">
-        <span class="h-1.5 w-10 mb-6 block bg-swatch-copper" aria-hidden="true"></span>
-        <h3 class="font-display text-lg uppercase tracked text-ink">Mixed-on-the-day colour</h3>
+      <div class="bg-canvas rounded-2xl border border-line shadow-md p-8">
+        <span class="h-1.5 w-10 mb-6 block rounded-full bg-swatch-copper" aria-hidden="true"></span>
+        <h3 class="font-display font-black uppercase tracked text-ink">Mixed-on-the-day colour</h3>
         <p class="mt-3 text-sm text-ink-soft leading-relaxed">
           No pre-set formulas. Every colour is mixed against your hair, in
           the room, on the day.
         </p>
       </div>
-      <div class="bg-canvas p-8">
-        <span class="h-1.5 w-10 mb-6 block bg-swatch-espresso" aria-hidden="true"></span>
-        <h3 class="font-display text-lg uppercase tracked text-ink">One chair at a time</h3>
+      <div class="bg-canvas rounded-2xl border border-line shadow-md p-8">
+        <span class="h-1.5 w-10 mb-6 block rounded-full bg-swatch-espresso" aria-hidden="true"></span>
+        <h3 class="font-display font-black uppercase tracked text-ink">One chair at a time</h3>
         <p class="mt-3 text-sm text-ink-soft leading-relaxed">
           Each stylist sees one client at a time. We'd rather run a shorter
           day than double-book a chair.
