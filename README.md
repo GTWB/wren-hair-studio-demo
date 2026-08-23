@@ -29,9 +29,13 @@ Richiede Node.js >= 22.12.
   cliente vero. Dettagli commentati nel file `src/pages/booking/index.astro`:
   per un cliente reale va sostituito il `data-url` con il link Calendly del
   cliente (l'account deve già esistere, non va mai creato per suo conto).
-- **Contact form**: markup pronto per Netlify Forms (`data-netlify="true"`),
-  con invio via fetch e messaggio di conferma inline. Funzionerà
-  concretamente solo una volta pubblicato su Netlify.
+- **Contact form**: usa [Web3Forms](https://web3forms.com) (standard
+  dell'agenzia, vedi `documentazione-progetto/manuale-stile.md`) — invio via
+  fetch in JSON con Access Key dedicata, messaggio di conferma inline.
+  Funziona anche in locale, ma Web3Forms blocca le richieste che riconosce
+  come non-browser (curl, ambienti di test automatizzati): un invio che
+  fallisce da lì non indica un bug, va sempre verificato da un browser
+  reale. Verificato funzionante in produzione (email recapitata).
 - **Mappa**: embed statico OpenStreetMap, nessuna API key richiesta.
 - Immagini: placeholder fotografici da Unsplash (URL diretti), verificati
   singolarmente per essere coerenti con un salone di parrucchieri.
