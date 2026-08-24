@@ -32,8 +32,8 @@ import { salon, serviceCategories, team } from "../../data/site";
         <input type="hidden" name="subject" value="New booking request from wrenhairstudio.netlify.app" />
         <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off" />
 
-        <div class="grid sm:grid-cols-2 gap-5">
-          <div>
+        <div class="grid sm:grid-cols-2 gap-5 min-w-0">
+          <div class="min-w-0">
             <label for="b-service" class="block text-sm text-ink-soft mb-1.5">Service</label>
             <select id="b-service" name="service" required
               class="w-full rounded-lg border border-line bg-canvas px-4 py-2.5 text-ink focus-visible:outline-2 focus-visible:outline-accent">
@@ -51,7 +51,7 @@ import { salon, serviceCategories, team } from "../../data/site";
               }
             </select>
           </div>
-          <div>
+          <div class="min-w-0">
             <label for="b-stylist" class="block text-sm text-ink-soft mb-1.5">Preferred stylist</label>
             <select id="b-stylist" name="stylist"
               class="w-full rounded-lg border border-line bg-canvas px-4 py-2.5 text-ink focus-visible:outline-2 focus-visible:outline-accent">
@@ -61,13 +61,13 @@ import { salon, serviceCategories, team } from "../../data/site";
           </div>
         </div>
 
-        <div class="grid sm:grid-cols-2 gap-5">
-          <div>
+        <div class="grid sm:grid-cols-2 gap-5 min-w-0">
+          <div class="min-w-0">
             <label for="b-date" class="block text-sm text-ink-soft mb-1.5">Preferred date</label>
             <input id="b-date" name="preferred_date" type="date" required
-              class="w-full rounded-lg border border-line bg-canvas px-4 py-2.5 text-ink focus-visible:outline-2 focus-visible:outline-accent" />
+              class="w-full min-w-0 rounded-lg border border-line bg-canvas px-4 py-2.5 text-ink focus-visible:outline-2 focus-visible:outline-accent" />
           </div>
-          <div>
+          <div class="min-w-0">
             <label for="b-time" class="block text-sm text-ink-soft mb-1.5">Preferred time</label>
             <select id="b-time" name="preferred_time" required
               class="w-full rounded-lg border border-line bg-canvas px-4 py-2.5 text-ink focus-visible:outline-2 focus-visible:outline-accent">
@@ -79,13 +79,13 @@ import { salon, serviceCategories, team } from "../../data/site";
           </div>
         </div>
 
-        <div class="grid sm:grid-cols-2 gap-5">
-          <div>
+        <div class="grid sm:grid-cols-2 gap-5 min-w-0">
+          <div class="min-w-0">
             <label for="b-name" class="block text-sm text-ink-soft mb-1.5">Full name</label>
             <input id="b-name" name="name" type="text" required autocomplete="name"
               class="w-full rounded-lg border border-line bg-canvas px-4 py-2.5 text-ink focus-visible:outline-2 focus-visible:outline-accent" />
           </div>
-          <div>
+          <div class="min-w-0">
             <label for="b-phone" class="block text-sm text-ink-soft mb-1.5">Phone</label>
             <input id="b-phone" name="phone" type="tel" required autocomplete="tel"
               class="w-full rounded-lg border border-line bg-canvas px-4 py-2.5 text-ink focus-visible:outline-2 focus-visible:outline-accent" />
