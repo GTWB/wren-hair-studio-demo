@@ -64,8 +64,35 @@ import { salon, serviceCategories, team } from "../../data/site";
         <div class="grid sm:grid-cols-2 gap-5 min-w-0">
           <div class="min-w-0">
             <label for="b-date" class="block text-sm text-ink-soft mb-1.5">Preferred date</label>
-            <input id="b-date" name="preferred_date" type="date" required
-              class="w-full min-w-0 rounded-lg border border-line bg-canvas px-4 py-2.5 text-ink focus-visible:outline-2 focus-visible:outline-accent" />
+            <!--
+              iOS WebKit (Safari, Chrome-on-iOS — same engine) computes an
+              internal width for input[type=date] that ignores width/
+              min-width/display CSS overrides and overflows its box; this
+              happens regardless of any sizing fix applied directly to it.
+              Fix: keep the real native date input (so the OS date picker
+              still opens — required for date selection), but make it
+              invisible and overlay it on a decorative "fake" field, inside
+              a container clipped with overflow-hidden. Whatever width
+              WebKit insists on internally is simply clipped and never
+              visible; only the fake field's text (synced via the script
+              below) and layout are seen.
+            -->
+            <div class="relative overflow-hidden rounded-lg border border-line bg-canvas focus-within:outline-2 focus-within:outline-accent focus-within:outline-offset-2">
+              <span
+                id="b-date-display"
+                aria-hidden="true"
+                class="block truncate px-4 py-2.5 text-ink-faint pointer-events-none"
+              >
+                Choose a date
+              </span>
+              <input
+                id="b-date"
+                name="preferred_date"
+                type="date"
+                required
+                class="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+              />
+            </div>
           </div>
           <div class="min-w-0">
             <label for="b-time" class="block text-sm text-ink-soft mb-1.5">Preferred time</label>
@@ -109,7 +136,7 @@ import { salon, serviceCategories, team } from "../../data/site";
 
         <button
           type="submit"
-          class="inline-flex items-center justify-center bg-ink text-canvas font-display font-bold uppercase tracked text-sm px-8 py-4 rounded-lg hover:bg-accent hover:text-ink transition-colors"
+          class="flex w-full items-center justify-center bg-ink text-canvas font-display font-bold uppercase tracked text-sm px-8 py-4 rounded-lg hover:bg-accent hover:text-ink transition-colors"
         >
           Request appointment
         </button>
@@ -164,6 +191,34 @@ import { salon, serviceCategories, team } from "../../data/site";
   const form = document.getElementById("booking-form") as HTMLFormElement | null;
   const confirmation = document.getElementById("booking-confirmation");
   const errorMsg = document.getElementById("booking-error");
+
+  // Keeps the visible "fake" date field in sync with the real (invisible,
+  // overlaid) native date input — see the comment in the markup above.
+  const dateInput = document.getElementById("b-date") as HTMLInputElement | null;
+  const dateDisplay = document.getElementById("b-date-display");
+  const dateDisplayDefault = dateDisplay?.textContent?.trim() ?? "Choose a date";
+
+  const syncDateDisplay = () => {
+    if (!dateDisplay) return;
+    if (dateInput?.value) {
+      const parsed = new Date(`${dateInput.value}T00:00:00`);
+      dateDisplay.textContent = parsed.toLocaleDateString("en-GB", {
+        weekday: "short",
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      });
+      dateDisplay.classList.remove("text-ink-faint");
+      dateDisplay.classList.add("text-ink");
+    } else {
+      dateDisplay.textContent = dateDisplayDefault;
+      dateDisplay.classList.add("text-ink-faint");
+      dateDisplay.classList.remove("text-ink");
+    }
+  };
+
+  dateInput?.addEventListener("input", syncDateDisplay);
+  form?.addEventListener("reset", syncDateDisplay);
 
   form?.addEventListener("submit", async (e) => {
     e.preventDefault();
