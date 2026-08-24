@@ -1,18 +1,13 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import ConsentCheckbox from "../../components/ConsentCheckbox.astro";
+import { salon, serviceCategories, team } from "../../data/site";
 
-/**
- * DEMO NOTE — this is a real Calendly inline embed, connected to a free-tier
- * test account with a single event type, used only to preview how a live
- * booking widget looks and behaves on the site. It is not the final setup
- * for a real client.
- *
- * When this site goes live for an actual client (Premium package), swap the
- * data-url below for the client's own Calendly link (their account must
- * already exist — never create one on their behalf). If an inline embed
- * doesn't fit the layout, a Calendly popup button linking out is the
- * alternative.
- */
+// Request-only booking form (no live scheduling integration): a submission
+// reserves nothing automatically, we call the client back to confirm a time.
+// Sent via Web3Forms, same JSON fetch pattern and access key as the contact
+// form (see src/pages/contact/index.astro) — swap for the client's own
+// Web3Forms access key when this template is reused for a real customer.
 ---
 
 <Layout
@@ -25,52 +20,177 @@ import Layout from "../../layouts/Layout.astro";
       Book a <span class="text-accent">chair</span>
     </h1>
     <p class="mt-6 text-lg text-ink-soft max-w-xl leading-relaxed">
-      Pick a service, a stylist and a time that works — your appointment is
-      confirmed instantly, with a reminder sent straight to your inbox.
+      Tell us the service, stylist and time that work best — we'll call you
+      back within a few hours to confirm your appointment.
     </p>
   </section>
 
-  <section class="reveal mx-auto max-w-6xl px-5 sm:px-8 pb-24">
-    <div id="booking-widget" class="grid gap-10 lg:grid-cols-12">
-      <div class="lg:col-span-8 rounded-2xl border border-line bg-paper shadow-md p-2 sm:p-4">
-        <!--
-          Real Calendly inline embed, for a test with the user's own free-tier
-          account (single event type). Swap data-url for the client's own
-          Calendly link when this is reused for a real customer.
-        -->
-        <div
-          class="calendly-inline-widget"
-          data-url="https://calendly.com/giuseppes90"
-          style="min-width:320px;height:700px;"
-        >
-        </div>
-      </div>
+  <section class="reveal mx-auto max-w-6xl px-5 sm:px-8 pb-24 grid gap-10 lg:grid-cols-12">
+    <div class="lg:col-span-8 rounded-2xl bg-paper shadow-md p-6 sm:p-10">
+      <form id="booking-form" name="booking" method="POST" class="space-y-5">
+        <input type="hidden" name="access_key" value="200d2d09-2416-4066-9715-990c97589661" />
+        <input type="hidden" name="subject" value="New booking request from wrenhairstudio.netlify.app" />
+        <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off" />
 
-      <aside class="lg:col-span-4">
-        <div class="rounded-2xl bg-canvas-alt shadow-md p-6 sticky top-28">
-          <p class="eyebrow text-accent text-xs mb-4">
-            Good to know
-          </p>
-          <ul class="space-y-4 text-sm text-ink-soft leading-relaxed">
-            <li>
-              <span class="block font-display font-black text-ink text-xs uppercase tracked mb-1">Confirmation</span>
-              Your slot is booked instantly &mdash; you'll get an email
-              confirmation and an automatic reminder ahead of time.
-            </li>
-            <li>
-              <span class="block font-display font-black text-ink text-xs uppercase tracked mb-1">Cancellations</span>
-              Need to change plans? Use the reschedule or cancel link in your
-              confirmation email &mdash; no need to call.
-            </li>
-            <li>
-              <span class="block font-display font-black text-ink text-xs uppercase tracked mb-1">First visit?</span>
-              Add a note above and we'll allow extra time for a consultation.
-            </li>
-          </ul>
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div>
+            <label for="b-service" class="block text-sm text-ink-soft mb-1.5">Service</label>
+            <select id="b-service" name="service" required
+              class="w-full rounded-lg border border-line bg-canvas px-4 py-2.5 text-ink focus-visible:outline-2 focus-visible:outline-accent">
+              <option value="" disabled selected>Choose a service</option>
+              {
+                serviceCategories.map((category) => (
+                  <optgroup label={category.label}>
+                    {category.services.map((service) => (
+                      <option value={service.name}>
+                        {service.name} — {service.price}
+                      </option>
+                    ))}
+                  </optgroup>
+                ))
+              }
+            </select>
+          </div>
+          <div>
+            <label for="b-stylist" class="block text-sm text-ink-soft mb-1.5">Preferred stylist</label>
+            <select id="b-stylist" name="stylist"
+              class="w-full rounded-lg border border-line bg-canvas px-4 py-2.5 text-ink focus-visible:outline-2 focus-visible:outline-accent">
+              <option value="No preference" selected>No preference</option>
+              {team.map((member) => <option value={member.name}>{member.name}</option>)}
+            </select>
+          </div>
         </div>
-      </aside>
+
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div>
+            <label for="b-date" class="block text-sm text-ink-soft mb-1.5">Preferred date</label>
+            <input id="b-date" name="preferred_date" type="date" required
+              class="w-full rounded-lg border border-line bg-canvas px-4 py-2.5 text-ink focus-visible:outline-2 focus-visible:outline-accent" />
+          </div>
+          <div>
+            <label for="b-time" class="block text-sm text-ink-soft mb-1.5">Preferred time</label>
+            <select id="b-time" name="preferred_time" required
+              class="w-full rounded-lg border border-line bg-canvas px-4 py-2.5 text-ink focus-visible:outline-2 focus-visible:outline-accent">
+              <option value="" disabled selected>Choose a time of day</option>
+              <option value="Morning">Morning</option>
+              <option value="Afternoon">Afternoon</option>
+              <option value="Evening">Evening</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div>
+            <label for="b-name" class="block text-sm text-ink-soft mb-1.5">Full name</label>
+            <input id="b-name" name="name" type="text" required autocomplete="name"
+              class="w-full rounded-lg border border-line bg-canvas px-4 py-2.5 text-ink focus-visible:outline-2 focus-visible:outline-accent" />
+          </div>
+          <div>
+            <label for="b-phone" class="block text-sm text-ink-soft mb-1.5">Phone</label>
+            <input id="b-phone" name="phone" type="tel" required autocomplete="tel"
+              class="w-full rounded-lg border border-line bg-canvas px-4 py-2.5 text-ink focus-visible:outline-2 focus-visible:outline-accent" />
+          </div>
+        </div>
+
+        <div>
+          <label for="b-email" class="block text-sm text-ink-soft mb-1.5">Email</label>
+          <input id="b-email" name="email" type="email" required autocomplete="email"
+            class="w-full rounded-lg border border-line bg-canvas px-4 py-2.5 text-ink focus-visible:outline-2 focus-visible:outline-accent" />
+        </div>
+
+        <div>
+          <label for="b-notes" class="block text-sm text-ink-soft mb-1.5">Notes (optional)</label>
+          <textarea id="b-notes" name="notes" rows="4"
+            placeholder="First visit, colour history, anything else we should know"
+            class="w-full rounded-lg border border-line bg-canvas px-4 py-2.5 text-ink focus-visible:outline-2 focus-visible:outline-accent"></textarea>
+        </div>
+
+        <ConsentCheckbox id="booking-consent" name="consent" />
+
+        <button
+          type="submit"
+          class="inline-flex items-center justify-center bg-ink text-canvas font-display font-bold uppercase tracked text-sm px-8 py-4 rounded-lg hover:bg-accent hover:text-ink transition-colors"
+        >
+          Request appointment
+        </button>
+
+        <p
+          id="booking-confirmation"
+          role="status"
+          class="hidden rounded-lg border border-accent bg-canvas-alt text-ink px-5 py-4 text-sm"
+        >
+          Thanks &mdash; we've got your request. We'll call you back within a
+          few hours to confirm your time (nothing is booked yet).
+        </p>
+        <p
+          id="booking-error"
+          role="alert"
+          class="hidden rounded-lg border border-swatch-copper bg-canvas-alt text-ink px-5 py-4 text-sm"
+        >
+          Something went wrong sending your request. Please call us on
+          {salon.phone} instead.
+        </p>
+      </form>
     </div>
+
+    <aside class="lg:col-span-4">
+      <div class="rounded-2xl bg-canvas-alt shadow-md p-6 sticky top-28">
+        <p class="eyebrow text-accent text-xs mb-4">
+          Good to know
+        </p>
+        <ul class="space-y-4 text-sm text-ink-soft leading-relaxed">
+          <li>
+            <span class="block font-display font-black text-ink text-xs uppercase tracked mb-1">Confirmation</span>
+            This is a request, not an instant booking &mdash; we'll call you
+            back within a few hours to confirm a time that works.
+          </li>
+          <li>
+            <span class="block font-display font-black text-ink text-xs uppercase tracked mb-1">Changes</span>
+            Need to reschedule or cancel after we've confirmed? Just give us
+            a call on {salon.phone}.
+          </li>
+          <li>
+            <span class="block font-display font-black text-ink text-xs uppercase tracked mb-1">First visit?</span>
+            Mention it in the notes above and we'll allow extra time for a
+            consultation.
+          </li>
+        </ul>
+      </div>
+    </aside>
   </section>
 </Layout>
 
-<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+<script>
+  const form = document.getElementById("booking-form") as HTMLFormElement | null;
+  const confirmation = document.getElementById("booking-confirmation");
+  const errorMsg = document.getElementById("booking-error");
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    errorMsg?.classList.add("hidden");
+
+    const data = new FormData(form);
+    const payload = Object.fromEntries(data.entries());
+
+    try {
+      // Web3Forms documented AJAX pattern: JSON body, Content-Type
+      // application/json only (no extra headers — Web3Forms' CORS allowance
+      // is sensitive to this). No backend of our own required.
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const result = await response.json();
+      if (result.success) {
+        confirmation?.classList.remove("hidden");
+        form.reset();
+      } else {
+        errorMsg?.classList.remove("hidden");
+      }
+    } catch {
+      errorMsg?.classList.remove("hidden");
+    }
+    confirmation?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  });
+</script>

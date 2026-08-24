@@ -7,7 +7,7 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   // Placeholder demo domain — used only to generate absolute canonical/OG URLs.
   // Replace with the real Netlify/custom domain when this demo is deployed.
-  site: 'https://wren-hair-studio-demo.netlify.app',
+  site: 'https://wrenhairstudio.netlify.app',
   vite: {
     plugins: [tailwindcss()]
   }

@@ -22,13 +22,13 @@ Richiede Node.js >= 22.12.
 
 ## Note importanti
 
-- **Booking**: la pagina `/booking/` contiene un vero embed inline Calendly,
-  collegato a un account di test gratuito dell'utente (un solo tipo di
-  evento), usato solo per verificare come si comporta un widget di
-  prenotazione reale sul sito — non è la configurazione finale per un
-  cliente vero. Dettagli commentati nel file `src/pages/booking/index.astro`:
-  per un cliente reale va sostituito il `data-url` con il link Calendly del
-  cliente (l'account deve già esistere, non va mai creato per suo conto).
+- **Booking**: la pagina `/booking/` è un form di richiesta prenotazione
+  (non una prenotazione istantanea) — servizio, stilista preferito, data e
+  fascia oraria desiderate, dati di contatto e note. Invio via
+  [Web3Forms](https://web3forms.com) con lo stesso pattern del contact form
+  (fetch JSON, stessa Access Key), messaggio di conferma dedicato che spiega
+  che si verrà ricontattati entro poche ore per confermare l'orario. Nessuna
+  integrazione di scheduling reale collegata.
 - **Contact form**: usa [Web3Forms](https://web3forms.com) (standard
   dell'agenzia, vedi `documentazione-progetto/manuale-stile.md`) — invio via
   fetch in JSON con Access Key dedicata, messaggio di conferma inline.
@@ -39,5 +39,5 @@ Richiede Node.js >= 22.12.
 - **Mappa**: embed statico OpenStreetMap, nessuna API key richiesta.
 - Immagini: placeholder fotografici da Unsplash (URL diretti), verificati
   singolarmente per essere coerenti con un salone di parrucchieri.
-- Nessun account esterno reale creato in questa fase a parte l'account di
-  test Calendly usato per l'embed sopra (niente Stripe, PayPal).
+- Nessun account esterno reale creato in questa fase (niente Stripe, PayPal,
+  Calendly).
